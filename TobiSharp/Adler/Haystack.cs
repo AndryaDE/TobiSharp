@@ -93,6 +93,5 @@ namespace Adler {
 
 		#endregion
 
-		}
 	}
 }
