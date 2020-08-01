@@ -19,9 +19,9 @@ namespace Adler {
 
         #region methods
 
-        internal bool Contains(Needle needle) => Locate(needle).X >= 0;
+        internal bool Contains(Needle needle) => Locate(needle) >= 0;
 
-		internal Point Locate(Needle needle) {
+		internal int Locate(Needle needle) {
 			// Points 0...			// RearPoints 0...			// Sizes 1...
 
 			int firstRow = needle.StrongestPoint.Y * Size.Width;
@@ -31,7 +31,9 @@ namespace Adler {
 			int lastRow = Pixels.Length - lastRearRow;
 			int lastRowLastPixel = lastRow - needle.StrongestRearPoint.X;
 
-			Point result = new Point(-1, -1);
+			//Point result = new Point(-1, -1);
+
+			int result = -1;
 
 			Parallel.For(firstRowFirstPixel, lastRowLastPixel, (index, state) => {
 
@@ -39,15 +41,20 @@ namespace Adler {
 					return;
                 }
 
-				Point point = IndexToPoint( index );
-				point.Offset(needle.StrongestPoint.X * -1, needle.StrongestPoint.Y * -1);
+				int x = 0;
+				int y = 0;
 
-				if (MatchLocation(needle, point) == false) {
+				IndexToPoint( index, ref x, ref y );
+
+				x -= needle.StrongestPoint.X;
+				y -= needle.StrongestPoint.Y;
+
+				if (MatchLocation(needle, x, y) == false) {
 					return;
                 }
 
 				state.Stop();
-				result = point;
+				result = x;
 
 			});
 
@@ -89,10 +96,29 @@ namespace Adler {
 			});
 
 			return result;
-        }
+		}
+		internal bool MatchLocation(Needle needle, int startX, int startY) {
+
+			bool result = true;
+
+			Parallel.ForEach(needle.Pixels, (pixel, state, index) => {
+
+				int x = startX + (int)(index % needle.Size.Width);
+				int y = startY + (int)(index / needle.Size.Width);
+
+				if (MatchPixel(pixel, GetPixel(x, y))) {
+					return;
+				}
+
+				state.Stop();
+				result = false;
+
+			});
+
+			return result;
+		}
 
 		#endregion
 
-		}
 	}
 }

@@ -110,6 +110,11 @@ namespace Adler {
 			return new Point(x, y);
 		}
 
+		internal void IndexToPoint(int index, ref int x, ref int y) {
+			y = (int)(index / Size.Width);
+			x = (int)(index % Size.Width);
+		}
+
 		#endregion
 	}
 }
