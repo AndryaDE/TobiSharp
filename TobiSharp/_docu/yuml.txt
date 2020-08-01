@@ -1,0 +1,15 @@
+
+[Picture|Pixels;Size|Empty( size );Load( file );Save( file );GetPixel( point );IndexToPoint( index )]
+[Needle|StrongestPixel;StrongestPoint]
+[Haystack|Contains( Needle );Locate( Needle )]
+[Pixel|ARGB|Saturation( )]
+[Capture]
+[Window]
+
+[Capture]->[Window]
+[Window]->[Haystack]
+[Window]<-[Window]
+[Picture]^[Needle]
+[Picture]^[Haystack]
+[Needle]->[Haystack]
+[Pixel]->[Picture]

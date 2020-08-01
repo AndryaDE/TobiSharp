@@ -65,6 +65,7 @@ namespace Adler {
 			} finally {
 				pixelsPointer.Free();
             }
+			//image.UnlockBits();
 		}
 
         #endregion

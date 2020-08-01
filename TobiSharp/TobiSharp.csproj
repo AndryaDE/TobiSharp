@@ -53,13 +53,14 @@
     <Compile Include="Adler\Picture.cs" />
     <Compile Include="SunBlade\WinApi.cs" />
     <Compile Include="SunBlade\Wnd.cs" />
-    <Compile Include="_IGNORE\Adler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="_IGNORE\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
